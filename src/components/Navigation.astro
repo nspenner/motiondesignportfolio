@@ -8,6 +8,20 @@ const navItems = [
   { href: `${baseUrl}about`, label: 'About' },
   { href: `${baseUrl}contact`, label: 'Contact' },
 ];
+
+// Function to check if the current path matches the nav item
+function isActive(itemHref: string) {
+  // Normalize both paths by removing trailing slashes
+  const normalizedCurrent = currentPath.replace(/\/$/, '');
+  const normalizedHref = itemHref.replace(/\/$/, '');
+  
+  if (normalizedHref === baseUrl.replace(/\/$/, '')) {
+    // For home page, match exactly
+    return normalizedCurrent === normalizedHref;
+  }
+  // For other pages, check if path starts with the href
+  return normalizedCurrent === normalizedHref;
+}
 ---
 
 <header>
@@ -19,7 +33,7 @@ const navItems = [
           <li>
             <a 
               href={item.href} 
-              class={currentPath === item.href.replace(baseUrl, '/') ? 'active' : ''}
+              class={isActive(item.href) ? 'active' : ''}
             >
               {item.label}
             </a>

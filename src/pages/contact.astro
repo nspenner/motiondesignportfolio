@@ -51,9 +51,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="contact-form-section">
           <h2>Send a Message</h2>
-          <form class="contact-form" name="contact" method="POST" data-netlify="true">
-            <input type="hidden" name="form-name" value="contact" />
-            
+          <p class="form-note">
+            Please reach out via email or social media. You can also use the form below to compose a message 
+            that will open in your default email client.
+          </p>
+          <form class="contact-form" id="contact-form">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" required />
@@ -74,7 +76,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <textarea id="message" name="message" rows="6" required></textarea>
             </div>
 
-            <button type="submit" class="submit-button">Send Message</button>
+            <button type="submit" class="submit-button">Send via Email</button>
           </form>
         </div>
       </div>
@@ -224,9 +226,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
   }
 
+  .form-note {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+  }
+
   @media (max-width: 768px) {
     .contact-content {
       grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  // Handle contact form submission via mailto
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const subject = formData.get('subject');
+      const message = formData.get('message');
+      
+      // Construct mailto link
+      const mailtoLink = `mailto:contact@motiondesigner.com?subject=${encodeURIComponent(subject as string)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      
+      // Open mailto link
+      window.location.href = mailtoLink;
+    });
+  }
+</script>
