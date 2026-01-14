@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = ['All', 'Commercial', 'Music Video', 'Documentary', 'Short Film', 'Corporate'];
+---
+
+<BaseLayout title="Portfolio - Motion Designer" description="Browse my complete portfolio of video editing and motion graphics projects">
+  <section class="portfolio section">
+    <div class="container">
+      <h1>Portfolio</h1>
+      <p class="intro">Explore my collection of video projects spanning commercials, music videos, documentaries, and more.</p>
+      
+      <div class="filter-buttons">
+        {categories.map(category => (
+          <button 
+            class="filter-btn" 
+            data-category={category}
+            data-active={category === 'All' ? 'true' : 'false'}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="projects-grid grid grid-3">
+        {sortedProjects.map(project => (
+          <div class="project-item" data-category={project.data.category}>
+            <ProjectCard
+              title={project.data.title}
+              slug={project.slug}
+              category={project.data.category}
+              vimeoId={project.data.vimeoId}
+              thumbnail={project.data.thumbnail}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio {
+    padding-top: var(--spacing-lg);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .intro {
+    text-align: center;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    font-size: 1.1rem;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filter-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .filter-btn:hover,
+  .filter-btn[data-active="true"] {
+    background-color: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+
+  .project-item {
+    transition: var(--transition);
+  }
+
+  .project-item.hidden {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .filter-buttons {
+      gap: var(--spacing-xs);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  // Filter functionality
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+      
+      // Update active state
+      filterButtons.forEach(btn => btn.setAttribute('data-active', 'false'));
+      button.setAttribute('data-active', 'true');
+
+      // Filter projects
+      projectItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        if (category === 'All' || itemCategory === category) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
