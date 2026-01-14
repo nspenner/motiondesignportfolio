@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4);
+
+const recentProjects = allProjects
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6);
+---
+
+<BaseLayout title="Motion Designer - Video Editor & Motion Graphics Portfolio">
+  <section class="hero section">
+    <div class="container">
+      <div class="hero-content fade-in">
+        <h1>Bringing Stories to Life</h1>
+        <p class="hero-subtitle">
+          Video Editor & Motion Graphics Designer specializing in creating compelling visual narratives
+        </p>
+        <div class="hero-video">
+          <VideoEmbed vimeoId="76979871" title="Featured Reel" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured section">
+    <div class="container">
+      <h2>Featured Work</h2>
+      <div class="grid grid-2">
+        {featuredProjects.map(project => (
+          <ProjectCard
+            title={project.data.title}
+            slug={project.slug}
+            category={project.data.category}
+            vimeoId={project.data.vimeoId}
+            thumbnail={project.data.thumbnail}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="recent section">
+    <div class="container">
+      <h2>Recent Projects</h2>
+      <div class="grid grid-3">
+        {recentProjects.map(project => (
+          <ProjectCard
+            title={project.data.title}
+            slug={project.slug}
+            category={project.data.category}
+            vimeoId={project.data.vimeoId}
+            thumbnail={project.data.thumbnail}
+          />
+        ))}
+      </div>
+      <div class="cta-section">
+        <a href={`${import.meta.env.BASE_URL}portfolio`} class="cta-button">View All Projects</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .hero-video {
+    margin-top: var(--spacing-lg);
+  }
+
+  .featured h2,
+  .recent h2 {
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+  }
+
+  .cta-section {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: var(--transition);
+  }
+
+  .cta-button:hover {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--spacing-md) 0;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+</style>

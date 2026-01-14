@@ -1,0 +1,105 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  thumbnail?: string;
+  category: string;
+  vimeoId: string;
+}
+
+const { title, slug, thumbnail, category, vimeoId } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL || '/';
+const thumbnailUrl = thumbnail || `https://vumbnail.com/${vimeoId}.jpg`;
+---
+
+<article class="project-card">
+  <a href={`${baseUrl}projects/${slug}`} class="card-link">
+    <div class="card-image">
+      <img src={thumbnailUrl} alt={title} loading="lazy" />
+      <div class="card-overlay">
+        <span class="play-icon">▶</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <span class="category">{category}</span>
+      <h3>{title}</h3>
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-link {
+    display: block;
+    color: inherit;
+  }
+
+  .card-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+
+  .project-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+  }
+
+  .project-card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .play-icon {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-content {
+    padding: var(--spacing-sm);
+  }
+
+  .category {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-content h3 {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--color-text);
+  }
+</style>

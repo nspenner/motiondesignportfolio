@@ -1,0 +1,53 @@
+collections:
+  - name: projects
+    label: Projects
+    path: src/content/projects
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+        required: true
+      - name: vimeoId
+        label: Vimeo ID
+        type: string
+        required: true
+        help: "Just the ID, not the full URL (e.g., '76979871')"
+      - name: thumbnail
+        label: Thumbnail URL
+        type: string
+        help: "Optional. If not provided, will use Vimeo thumbnail"
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          - Commercial
+          - Music Video
+          - Documentary
+          - Short Film
+          - Corporate
+      - name: client
+        label: Client
+        type: string
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: featured
+        label: Featured Project
+        type: boolean
+        default: false
+      - name: body
+        label: Project Details
+        type: rich-text
+        help: "Add project overview, credits, technical details, etc."
+
+settings:
+  title: Motion Designer Portfolio
+  description: Manage your portfolio content
+  logo: https://pagescms.org/logo.svg
+  theme: dark

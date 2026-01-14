@@ -1,0 +1,109 @@
+---
+const baseUrl = import.meta.env.BASE_URL || '/';
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: `${baseUrl}`, label: 'Home' },
+  { href: `${baseUrl}portfolio`, label: 'Portfolio' },
+  { href: `${baseUrl}about`, label: 'About' },
+  { href: `${baseUrl}contact`, label: 'Contact' },
+];
+
+// Function to check if the current path matches the nav item
+function isActive(itemHref: string) {
+  // Normalize both paths by removing trailing slashes
+  const normalizedCurrent = currentPath.replace(/\/$/, '');
+  const normalizedHref = itemHref.replace(/\/$/, '');
+  
+  if (normalizedHref === baseUrl.replace(/\/$/, '')) {
+    // For home page, match exactly
+    return normalizedCurrent === normalizedHref;
+  }
+  // For other pages, check if path starts with the href
+  return normalizedCurrent === normalizedHref;
+}
+---
+
+<header>
+  <nav class="container">
+    <div class="nav-content">
+      <a href={baseUrl} class="logo">Motion Designer</a>
+      <ul class="nav-links">
+        {navItems.map(item => (
+          <li>
+            <a 
+              href={item.href} 
+              class={isActive(item.href) ? 'active' : ''}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    transition: var(--transition);
+  }
+
+  .logo:hover {
+    color: var(--color-accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--color-text);
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      gap: var(--spacing-xs);
+    }
+
+    .nav-links a {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+    }
+  }
+</style>

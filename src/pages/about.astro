@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About - Motion Designer" description="Learn more about my background, skills, and approach to video editing and motion design">
+  <section class="about section">
+    <div class="container">
+      <h1>About Me</h1>
+      
+      <div class="about-content">
+        <div class="bio-section">
+          <h2>Hi, I'm a Motion Designer & Video Editor</h2>
+          <p>
+            With over 8 years of experience in video production and motion graphics, I specialize in creating 
+            compelling visual stories that engage and inspire audiences. My work spans commercials, music videos, 
+            documentaries, and corporate content.
+          </p>
+          <p>
+            I believe that great video content combines technical excellence with creative vision. Whether it's 
+            a 30-second commercial or a feature-length documentary, I approach every project with the same 
+            dedication to storytelling and visual impact.
+          </p>
+          <p>
+            Based in [Your City], I work with clients worldwide to bring their visions to life through the 
+            power of motion and video.
+          </p>
+        </div>
+
+        <div class="skills-section">
+          <h2>Skills & Services</h2>
+          <div class="skills-grid">
+            <div class="skill-category">
+              <h3>Video Editing</h3>
+              <ul>
+                <li>Narrative editing</li>
+                <li>Commercial editing</li>
+                <li>Documentary editing</li>
+                <li>Music video editing</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Motion Graphics</h3>
+              <ul>
+                <li>2D/3D animation</li>
+                <li>Logo animation</li>
+                <li>Title design</li>
+                <li>Visual effects</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Post-Production</h3>
+              <ul>
+                <li>Color grading</li>
+                <li>Sound design</li>
+                <li>Compositing</li>
+                <li>Finishing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tools-section">
+          <h2>Tools & Software</h2>
+          <div class="tools-grid">
+            <div class="tool-group">
+              <h3>Editing</h3>
+              <ul>
+                <li>Adobe Premiere Pro</li>
+                <li>Final Cut Pro</li>
+                <li>DaVinci Resolve</li>
+              </ul>
+            </div>
+            <div class="tool-group">
+              <h3>Motion Graphics</h3>
+              <ul>
+                <li>Adobe After Effects</li>
+                <li>Cinema 4D</li>
+                <li>Blender</li>
+              </ul>
+            </div>
+            <div class="tool-group">
+              <h3>Other</h3>
+              <ul>
+                <li>Adobe Photoshop</li>
+                <li>Adobe Illustrator</li>
+                <li>Adobe Audition</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-top: var(--spacing-lg);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .about-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .bio-section,
+  .skills-section,
+  .tools-section {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .bio-section h2,
+  .skills-section h2,
+  .tools-section h2 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .bio-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+  }
+
+  .skills-grid,
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .skill-category,
+  .tool-group {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .skill-category h3,
+  .tool-group h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+    font-size: 1.25rem;
+  }
+
+  .skill-category ul,
+  .tool-group ul {
+    list-style: none;
+  }
+
+  .skill-category li,
+  .tool-group li {
+    padding: 0.25rem 0;
+    color: var(--color-text-secondary);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .skill-category li::before,
+  .tool-group li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .skills-grid,
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
