@@ -1,7 +1,8 @@
-collections:
+content:
   - name: projects
-    label: Projects
+    label: Video Projects
     path: src/content/projects
+    type: collection
     fields:
       - name: title
         label: Title
@@ -15,21 +16,22 @@ collections:
         label: Vimeo ID
         type: string
         required: true
-        help: "Just the ID, not the full URL (e.g., '76979871')"
+        description: "Just the ID, not the full URL (e.g., '76979871')"
       - name: thumbnail
         label: Thumbnail URL
         type: string
-        help: "Optional. If not provided, will use Vimeo thumbnail"
+        description: "Optional. If not provided, will use Vimeo thumbnail"
       - name: category
         label: Category
         type: select
         required: true
         options:
-          - Commercial
-          - Music Video
-          - Documentary
-          - Short Film
-          - Corporate
+          values:
+            - Commercial
+            - Music Video
+            - Documentary
+            - Short Film
+            - Corporate
       - name: client
         label: Client
         type: string
@@ -44,10 +46,8 @@ collections:
       - name: body
         label: Project Details
         type: rich-text
-        help: "Add project overview, credits, technical details, etc."
+        description: "Add project overview, credits, technical details, etc."
 
-settings:
-  title: Motion Designer Portfolio
-  description: Manage your portfolio content
-  logo: https://pagescms.org/logo.svg
-  theme: dark
+media:
+  input: public/images
+  output: /images
